@@ -32,15 +32,28 @@
   }
   .emoji { font-size: 56px; margin-bottom: 12px; }
   h1 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-  .subtitle { font-size: 16px; opacity: 0.75; margin-bottom: 28px; line-height: 1.6; font-weight: 400; }
+  .subtitle { font-size: 16px; opacity: 0.75; margin-bottom: 24px; line-height: 1.6; font-weight: 400; }
   .stats {
     background: rgba(139, 92, 246, 0.15);
     border: 1px solid rgba(139, 92, 246, 0.3);
     border-radius: 16px;
-    padding: 18px;
+    padding: 20px;
     margin-bottom: 28px;
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
   }
-  .stats p { font-size: 15px; opacity: 0.9; line-height: 1.9; font-weight: 600; }
+  .stat-item { flex: 1; }
+  .stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #c4b5fd, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+  }
+  .stat-label { font-size: 12px; opacity: 0.7; margin-top: 4px; font-weight: 600; }
+  .divider { width: 1px; background: rgba(255,255,255,0.1); }
   .cta {
     display: inline-block;
     background: linear-gradient(135deg, #8b5cf6, #6d28d9);
@@ -63,6 +76,7 @@
     font-weight: 400;
   }
   .footer { margin-top: 24px; font-size: 12px; opacity: 0.5; font-weight: 400; }
+  .empty-msg { font-size: 14px; opacity: 0.6; margin-bottom: 24px; }
 </style>
 </head>
 <body>
@@ -71,9 +85,19 @@
     <h1>شارَكَك صديقك قائمته</h1>
     <p class="subtitle">من تطبيق <strong>Where 2 Watch</strong><br>اكتشف ذوقه وحمّل التطبيق</p>
 
-    <div class="stats">
-      <p>✨ قائمة أفلام ومسلسلات مفضلة<br>🔒 لمشاهدتها، حمّل التطبيق</p>
+    <div class="stats" id="stats">
+      <div class="stat-item">
+        <div class="stat-number" id="count">—</div>
+        <div class="stat-label">عمل مُقيَّم</div>
+      </div>
+      <div class="divider"></div>
+      <div class="stat-item">
+        <div class="stat-number" id="top">—</div>
+        <div class="stat-label">أعلى تقييم</div>
+      </div>
     </div>
+
+    <p class="empty-msg">🔒 لمشاهدة القائمة كاملة، حمّل التطبيق</p>
 
     <a href="#" class="cta">📱 تحميل من App Store</a>
 
@@ -85,5 +109,13 @@
 
     <p class="footer">Where 2 Watch © 2026</p>
   </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const n = parseInt(params.get('n')) || 0;
+    const top = parseInt(params.get('top')) || 0;
+    if (n > 0) document.getElementById('count').textContent = n;
+    if (top > 0) document.getElementById('top').textContent = top + '/10';
+  </script>
 </body>
 </html>
